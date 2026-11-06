@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use NextGAN in your research, please cite the paper below."
+title: "NextGAN: Towards Simple and Scalable GAN Training for Image and Video Generation"
+type: software
+authors:
+  - family-names: Lou
+    given-names: Xinhao
+  - family-names: Xie
+    given-names: Dongye
+  - family-names: Sun
+    given-names: Peng
+  - family-names: Zhuang
+    given-names: Chenyi
+  - family-names: Yu
+    given-names: Kaicheng
+  - family-names: Lin
+    given-names: Tao
+repository-code: "https://github.com/LINs-lab/NextGAN"
+url: "https://arxiv.org/abs/2611.06270"
+preferred-citation:
+  type: article
+  title: "NextGAN: Towards Simple and Scalable GAN Training for Image and Video Generation"
+  authors:
+    - family-names: Lou
+      given-names: Xinhao
+    - family-names: Xie
+      given-names: Dongye
+    - family-names: Sun
+      given-names: Peng
+    - family-names: Zhuang
+      given-names: Chenyi
+    - family-names: Yu
+      given-names: Kaicheng
+    - family-names: Lin
+      given-names: Tao
+  journal: "arXiv preprint arXiv:2611.06270"
+  doi: "10.48550/arXiv.2611.06270"
+  year: 2026

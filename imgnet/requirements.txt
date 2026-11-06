@@ -1,0 +1,17 @@
+# ImageNet training, sampling, and evaluation dependencies.
+
+torch==2.5.0
+torchvision==0.20.0
+numpy==1.26.4
+Pillow==11.3.0
+PyYAML==6.0.2
+tqdm==4.67.1
+einops==0.8.1
+safetensors==0.6.2
+scipy==1.15.3
+requests==2.32.5
+
+# Backbones and frozen representation models.
+timm==1.0.28
+transformers==4.56.2
+diffusers==0.35.1

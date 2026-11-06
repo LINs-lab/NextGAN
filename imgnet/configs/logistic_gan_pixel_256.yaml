@@ -1,0 +1,52 @@
+# Minimal template: replace asset paths; defaults are documented in README.md.
+experiment:
+  save_dir: ./outputs/logistic_gan_pixel_256
+  resume: ''
+  init_weights: /path/to/jit_b_model_backbone.pt
+runtime:
+  nproc_per_node: 8
+  seed: 42
+  deterministic: false
+data:
+  name: in1k
+  data_dir: /path/to/ImageNet-1K
+  resolution: 256
+  num_classes: 1000
+  num_workers: 8
+network:
+  name: jit_b
+  params:
+    input_size: 256
+    learned_pe: true
+    label_drop_prob: 0.0
+model:
+  name: logistic_gan
+  params:
+    representations:
+    - arch: mae_b
+      input_size: 224
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/mae/vit_base_patch16_224.mae.pth
+    - arch: siglip2_b
+      input_size: 256
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/siglip2/siglip2-base-patch16-256
+    - arch: resnet18
+      input_size: 224
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/resnet/resnet18-f37072fd.pth
+    trainer:
+      gen_lr: 1.0e-05
+      critic_lr: 5.0e-05
+training:
+  batch_size: 32
+  total_steps: 100000
+  bf16: true
+  log_every: 50
+  vis_every: 1000
+  save_every: 5000
+evaluation:
+  checkpoint: ./outputs/logistic_gan_pixel_256/logistic_gan_step_100000.pt
+  weights: ema
+  batch_size: 64
+  num_images: 50000
+  seed: 1
+  models:
+  - inception

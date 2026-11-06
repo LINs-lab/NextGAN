@@ -1,0 +1,76 @@
+# Verified DiT recipe: replace asset paths before running.
+experiment:
+  save_dir: ./outputs/nextgan_dit_256
+  resume: ''
+  init_weights: /path/to/ucgm_tit_xl1_vavae/0000000.pt
+runtime:
+  nproc_per_node: 8
+  seed: 42
+  deterministic: false
+data:
+  name: in1k_latent
+  data_dir: /path/to/imagenet_latents/vavae_f16d32/train_256
+  resolution: 256
+  num_classes: 1000
+  num_workers: 8
+latent:
+  decoder_type: vavae
+  channels: 32
+  downsample_ratio: 16
+  multiplier: 1.0
+  decoder_path: /path/to/vavae_f16d32
+  stat_path: /path/to/vavae_f16d32_256_stat.pt
+network:
+  name: dit_xl_1
+  params:
+    input_size: 16
+    in_channels: 32
+    class_dropout_prob: 0.0
+  adapter:
+    source_prediction_type: velocity
+    target_prediction_type: x
+model:
+  name: nextgan
+  params:
+    representations:
+    - arch: mae_b
+      input_size: 224
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/mae/vit_base_patch16_224.mae.pth
+    - arch: siglip2_b
+      input_size: 256
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/siglip2/siglip2-base-patch16-256
+    - arch: resnet18
+      input_size: 224
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/resnet/resnet18-f37072fd.pth
+    trainer:
+      gen_lr: 1.0e-05
+      critic_lr: 5.0e-05
+      critic_steps: 2
+      grad_accum_steps: 1
+      ema_decay: 0.999
+      t_sampling:
+      - 1.0
+      noise_scale: 1.0
+      gen_betas:
+      - 0.9
+      - 0.999
+      critic_betas:
+      - 0.9
+      - 0.999
+training:
+  batch_size: 32
+  total_steps: 100000
+  bf16: true
+  log_every: 100
+  vis_every: 0
+  save_every: 5000
+evaluation:
+  weights: ema
+  batch_size: 256
+  num_images: 50000
+  seed: 1
+  dtype: bf16
+  models:
+  - inception
+  no_prc: true
+  eval_mmd: false

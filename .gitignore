@@ -1,0 +1,70 @@
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+
+# Python environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Coverage and test artifacts
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Experiment outputs
+outputs/
+runs/
+wandb/
+tmp/
+
+# ImageNet reproduction environments and generated artifacts
+.venv-reproduce/
+reproductions/
+
+# Locally supplied pretrained weights and datasets
+*.pt
+*.pth
+*.safetensors
+model_zoo/
+data_zoo/

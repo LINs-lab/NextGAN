@@ -1,0 +1,65 @@
+{
+  "paper": "https://arxiv.org/abs/2611.06270v1",
+  "images": [
+    {
+      "file": "nextgan-pipeline.png",
+      "figure": 2,
+      "source": "NextGAN arXiv submission, Figure 2",
+      "source_pdf": "nextgan_v14_page13_cropped.pdf",
+      "source_sha256": "32405b2a800d9bd318c0564d47be4af5602b9f1a01f3321a48670e56abed2920",
+      "sha256": "1a898d3adb480ee45c278078ad1b5d92a783bc4e75ff2b5116acff04825a301e",
+      "width": 2400,
+      "height": 1122,
+      "processing": "Rasterized the original single-page paper figure to a 2400-pixel-wide PNG without content edits."
+    }
+  ],
+  "imagenet_reproduction": {
+    "file": "imagenet-reproduction.csv",
+    "sha256": "f7c4cd9884ab328e7099583db119fe1f5395c7d4ea24dd6a6cbef4f70cd3a2e7",
+    "method": "NextGAN",
+    "generator": "DiT-XL/1 + VA-VAE",
+    "selection": "Minimum FID(ADM) over 11 checkpoints from 50K to 100K generator updates, every 5K.",
+    "protocol": {
+      "weights": "ema",
+      "num_images": 50000,
+      "seed": 1,
+      "gpu_ranks": 8,
+      "batch_size_per_gpu": 256,
+      "dtype": "bf16",
+      "nfe": 1,
+      "cfg": 1
+    },
+    "best": {
+      "step": 95000,
+      "fid_adm": 1.267855,
+      "fid_jit": 1.202588,
+      "inception_score": 258.926,
+      "checkpoint_sha256": "9f3b9c833f7032711fdb59a65fefd8ab6e192c4e5b12c073b36fb73e5a5a6ce5"
+    }
+  },
+  "imagenet_jit_reproduction": {
+    "file": "imagenet-jit-reproduction.csv",
+    "sha256": "8ea287610109ba7f0db34b6729959e72fd9565ccbe140b560f9499c4260d1d84",
+    "method": "NextGAN",
+    "generator": "JiT-B",
+    "selection": "Minimum FID over 11 evaluations from 50K to 100K generator updates, every 5K.",
+    "completed_generator_updates": 100000,
+    "protocol": {
+      "weights": "ema",
+      "num_images": 50000,
+      "seed": 1,
+      "gpu_ranks": 8,
+      "batch_size_per_gpu": 256,
+      "dtype": "bf16",
+      "nfe": 1,
+      "cfg": 1
+    },
+    "best": {
+      "step": 75000,
+      "fid_adm": 2.749671,
+      "fid_jit": 2.949016,
+      "inception_score": 212.9616,
+      "checkpoint_sha256": "15785d516b2f4f01fcc8213a4c8d668a2855377ff365d1a4cffdd47b188c965c"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+# Minimal template: replace asset paths; defaults are documented in README.md.
+experiment:
+  save_dir: ./outputs/nextgan_latent_256
+  resume: ''
+  init_weights: /path/to/dit_xl_2.pt
+runtime:
+  nproc_per_node: 8
+  seed: 42
+  deterministic: false
+data:
+  name: in1k_latent
+  data_dir: /path/to/imagenet_sdvae_f8c4/train_256
+  resolution: 256
+  num_classes: 1000
+  num_workers: 8
+latent:
+  decoder_type: sdvae
+  channels: 4
+  downsample_ratio: 8
+  multiplier: 0.18215
+  decoder_path: /path/to/model_zoo/sdvae/sd-vae-ft-ema
+network:
+  name: dit_xl_2
+  params:
+    input_size: 32
+    in_channels: 4
+  adapter:
+    source_prediction_type: velocity
+model:
+  name: nextgan
+  params:
+    representations:
+    - arch: mae_b
+      input_size: 224
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/mae/vit_base_patch16_224.mae.pth
+    - arch: siglip2_b
+      input_size: 256
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/siglip2/siglip2-base-patch16-256
+    - arch: resnet18
+      input_size: 224
+      ckpt_path: ${DM_MODEL_ZOO}/pretrained/resnet/resnet18-f37072fd.pth
+    trainer:
+      gen_lr: 1.0e-05
+      critic_lr: 5.0e-05
+      critic_steps: 2
+training:
+  batch_size: 32
+  total_steps: 100000
+  bf16: true
+  log_every: 50
+  vis_every: 1000
+  save_every: 5000
+evaluation:
+  checkpoint: ./outputs/nextgan_latent_256/nextgan_step_100000.pt
+  weights: ema
+  batch_size: 256
+  num_images: 50000
+  seed: 1
+  models:
+  - inception
